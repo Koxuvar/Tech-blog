@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const withAuth = require('../utils/auth');
-const BlogPost = require('../models/blogPost');
+const BlogPost = require('../models/BlogPost');
 
 router.get('/', (req, res) =>
 {
@@ -45,8 +45,6 @@ router.get('/post/:id', withAuth, (req,res) =>
         });
     });
 });
-
-
 
 
 module.exports = router;
