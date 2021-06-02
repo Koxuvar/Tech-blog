@@ -4,10 +4,17 @@ const BlogPost = require('../models/BlogPost');
 
 router.get('/', (req, res) =>
 {
-    res.render('landing');
+    BlogPost.findAll()
+    .then((posts) =>
+    {
+        const po = posts.map((post) => post.get({plain:true}));
+        res.render('landing',
+        po);
+    })
+    
 });
 
-router.get('/blog', withAuth, (req, res) =>
+router.get('/myblog', withAuth, (req, res) =>
 {
     BlogPost.findAll(
     {
