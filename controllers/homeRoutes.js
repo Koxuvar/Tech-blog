@@ -1,15 +1,25 @@
 const router = require('express').Router();
 const withAuth = require('../utils/auth');
-const BlogPost = require('../models/BlogPost');
+const {User, BlogPost} = require('../models');
 
 router.get('/', (req, res) =>
 {
-    BlogPost.findAll()
+    BlogPost.findAll(
+        {
+            include:
+            [
+                {
+                    model: User
+                }
+            ]
+        }
+    )
     .then((posts) =>
     {
         const po = posts.map((post) => post.get({plain:true}));
         res.render('landing',
-        po);
+        {po,
+        logged_in: req.session.logged_in});
     })
     
 });
@@ -21,7 +31,13 @@ router.get('/myblog', withAuth, (req, res) =>
         where: 
         {
             user_id: req.session.user_id
-        }
+        },
+        include:
+        [
+            {
+                model:User
+            }
+        ]
     })
     .then((posts) =>
     {
@@ -33,6 +49,12 @@ router.get('/myblog', withAuth, (req, res) =>
     });
 });
 
+router.get('/login-register', (req, res) =>
+{
+    res.render('login-register',
+    {logged_in: req.session.logged_in});
+});
+
 router.get('/post/:id', withAuth, (req,res) =>
 {
     BlogPost.findByPk(
@@ -40,7 +62,13 @@ router.get('/post/:id', withAuth, (req,res) =>
         where:
         {
             id: req.params.id
-        }
+        },
+        include:
+        [
+            {
+                model:User
+            }
+        ]
     })
     .then((post) =>
     {
