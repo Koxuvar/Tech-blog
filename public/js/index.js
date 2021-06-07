@@ -24,6 +24,7 @@ document.querySelectorAll('#read-more').forEach(item =>
         const pid = t.dataset.postid;
             
         fetch(`/api/blog/post/${pid}`)
-        .then(response => response.ok ? document.location.replace(`/post/${response.json().id}`) : 'Error in getting post');
+        .then(response => response.ok ? response.json() : 'Error in getting post')
+        .then((data) => document.location.replace(`/post/${data.id}`));
     })
 });

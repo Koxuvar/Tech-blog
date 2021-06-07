@@ -1,17 +1,12 @@
 <div class="container-fluid p-5">
-    {{#each po as |post|}}
     <div class="col py-2">
         <div class="card">
-            <h5 class="card-header">{{post.title}} </h5>
+            <h5 class="card-header">{{po.title}} </h5>
             <div class="card-body">
-                <p class="card-text">{{post.content}}</p>
+                <p class="card-text">{{po.content}}</p>
                 <br>
-                <footer class="blockquote-footer">{{post.user.username}}</footer>
-            </div>
-            <div class="text-end p-2">
-                <div class="btn btn-primary" id="read-more" data-postid="{{post.id}}">Read More ></div>
+                <footer class="blockquote-footer">{{po.user.username}}</footer>
             </div>
         </div>
     </div>
-    {{/each}}
 </div>

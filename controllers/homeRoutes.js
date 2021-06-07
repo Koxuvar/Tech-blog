@@ -17,7 +17,7 @@ router.get('/', (req, res) =>
     .then((posts) =>
     {
         const po = posts.map((post) => post.get({plain:true}));
-        res.render('landing',
+        res.render('posts',
         {po,
         logged_in: req.session.logged_in});
     })
@@ -42,7 +42,7 @@ router.get('/myblog', withAuth, (req, res) =>
     .then((posts) =>
     {
         const po = posts.map((post) => post.get({plain: true}));
-        res.render('blog', {
+        res.render('posts', {
             logged_in: req.session.logged_in,
             po
         });
@@ -52,18 +52,17 @@ router.get('/myblog', withAuth, (req, res) =>
 router.get('/login-register', (req, res) =>
 {
     res.render('login-register',
-    {logged_in: req.session.logged_in});
+    {
+        logged_in: req.session.logged_in
+    });
 });
 
-router.get('/post/:id', withAuth, (req,res) =>
+router.get('/post/:id', (req,res) =>
 {
     BlogPost.findByPk(
+    req.params.id,
     {
-        where:
-        {
-            id: req.params.id
-        },
-        include:
+    include:
         [
             {
                 model:User
@@ -72,7 +71,9 @@ router.get('/post/:id', withAuth, (req,res) =>
     })
     .then((post) =>
     {
+        
         const po = post.get({plain: true});
+        console.log(po);
         res.render('singlePost', 
         {
             logged_in: req.session.logged_in,
