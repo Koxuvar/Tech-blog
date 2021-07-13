@@ -16,10 +16,17 @@ router.get('/', (req, res) =>
     )
     .then((posts) =>
     {
-        const po = posts.map((post) => post.get({plain:true}));
-        res.render('posts',
-        {po,
-        logged_in: req.session.logged_in});
+        if(posts)
+        {
+            const po = posts.map((post) => post.get({plain:true}));
+            res.render('posts',
+            {po,
+            logged_in: req.session.logged_in});
+        }
+        else
+        {
+            res.render('oops').status(404);
+        }
     })
     
 });
