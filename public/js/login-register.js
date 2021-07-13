@@ -44,6 +44,7 @@ lsb.addEventListener('click', async (e) =>
 
 rsb.addEventListener('click', async (e) =>
 {
+    console.log('fuuuuuuuuuu')
     const username = document.getElementById('floatingRegInput').value;
     const password = document.getElementById('floatingRegPassword').value;
     

@@ -8,6 +8,7 @@ router.use('/blog', blogRoutes);
 router.get('/seedthisthingwiththisreallylongurl', (req, res) =>
 {
     seedAll();
+    res.json({message:'you found it!'});
 });
 
 module.exports = router;
